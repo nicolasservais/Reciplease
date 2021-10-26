@@ -20,6 +20,8 @@ final class CellRecipe: UITableViewCell {
     private var currentOffset: CGFloat = 0
     private var previousOffset: CGFloat = 0
     private var summaryOffset: CGFloat = 0
+    
+    private var containerView: UIView = UIView()
 
     
     init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, hit: Recipes.hits) {
