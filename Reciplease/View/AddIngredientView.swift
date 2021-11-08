@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class AddIngredientView: UIView {
+class AddIngredientView: UIView, UITextFieldDelegate {
     
     private let widthButton: CGFloat = 80
     private let heightButton: CGFloat = 40
@@ -19,30 +19,36 @@ class AddIngredientView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        start()
+        loadView()
     }
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        //fatalError("init(coder:) has not been implemented")
+        return nil
     }
-    func start() {
+    func loadView() {
         self.layer.cornerRadius = 12
-        //self.layer.borderWidth = 4
-        //self.layer.borderColor = UIColor.darkGray.cgColor
         label.text = "What's in my fridge ?"
         label.textAlignment = .center
         label.textColor = .darkGray
         textField.layer.cornerRadius = 8
         textField.layer.borderWidth = 2
         textField.layer.borderColor = UIColor.darkGray.cgColor
+        textField.textColor = .darkGray
+        textField.textAlignment = .center
+        textField.delegate = self
+        textField.accessibilityIdentifier = "ingredient"
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "Chicken or egg or salad ...",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+        )
+        buttonAdd.accessibilityIdentifier = "addIngredient"
         buttonAdd.layer.cornerRadius = 8
         buttonAdd.layer.backgroundColor = UIColor.systemGreen.cgColor
         buttonAdd.setTitle("Add", for: .normal)
         self.addSubview(label)
         self.addSubview(textField)
         self.addSubview(buttonAdd)
-
         self.backgroundColor = .white
-    
     }
     func redraw(size: CGSize) {
         self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: size.width, height: self.frame.height)
@@ -51,11 +57,8 @@ class AddIngredientView: UIView {
         buttonAdd.frame = CGRect(x: size.width-widthButton, y: heightButton+spaceIn, width: widthButton-spaceIn, height: heightButton)
     }
     func getText() -> String {
-        if let result: String = textField.text {
-            return result
-        } else {
-            return "ERROR in getText"
-        }
+        guard let text = textField.text else { return "" }
+        return text
     }
     func getButtonAdd() -> UIButton {
         return buttonAdd
@@ -63,5 +66,11 @@ class AddIngredientView: UIView {
     func resetText() {
         textField.text = ""
     }
-
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return false
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.text = ""
+    }
 }

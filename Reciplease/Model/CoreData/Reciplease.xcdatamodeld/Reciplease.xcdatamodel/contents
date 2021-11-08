@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="20G224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Ingredients" representedClassName=".Ingredients" syncable="YES" codeGenerationType="category">
+        <attribute name="ingredient" optional="YES" attributeType="String"/>
+        <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Recipe" inverseName="ingredients" inverseEntity="Recipe"/>
+    </entity>
+    <entity name="Recipe" representedClassName=".Recipe" syncable="YES" codeGenerationType="category">
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="label" optional="YES" attributeType="String"/>
+        <attribute name="rating" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalTime" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="urlDirection" optional="YES" attributeType="String"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ingredients" inverseName="recipe" inverseEntity="Ingredients"/>
+    </entity>
+    <elements>
+        <element name="Ingredients" positionX="138.8807373046875" positionY="4.834503173828125" width="128" height="73"/>
+        <element name="Recipe" positionX="138.19775390625" positionY="-231.2665405273438" width="128" height="133"/>
+    </elements>
+</model>
