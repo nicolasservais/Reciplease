@@ -74,7 +74,6 @@ class CoredataRecipe {
                     ingredientData.ingredient = value
                     recipeData.addToIngredients(ingredientData)
                 }
-                //try? coreDataStack.viewContext.save()
                 coreDataStack.saveContext()
                 if isRecipeStored(recipe: recipe) {
                     NotificationCenter.default.post(name: Notification.Name("validateAddRecipe"), object: recipe)
@@ -101,10 +100,5 @@ class CoredataRecipe {
             fetchRequest.predicate = NSPredicate.init(format: "label == %@", recipe.label)
             guard let objects = try? coreDataStack.viewContext.fetch(fetchRequest) else { return false }
             return objects.count > 0 ? true : false
-                /*if objects.count > 0 {
-                    return true
-                } else {
-                    return false
-                }*/
         }
 }

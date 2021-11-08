@@ -92,27 +92,12 @@ final class ListRecipesTableViewController: UITableViewController {
         }
     }
     func setRecipes(recipes: Recipes?, stored: Bool) {
-        //if !AppDelegate.coreDataRecipeActivate {
-        //    AppDelegate.coreDataRecipeActivate = true
-        //}
-        
         if !stored {
             self.recipes = recipes!
         } else {
             if let recipesStored = AppDelegate.coredataRecipe?.getRecipesStored()  {
                 self.recipes = recipesStored
             }
-            //guard self.recipes = (AppDelegate.coredataRecipe?.getRecipesStored())! else { return }
-            
-            //if !initCoreData {
-            //    initCoreData = true
-            //    initCoreDataStack()
-            //}
-            //let coredataRecipe = CoredataRecipe(coreDataStack: AppDelegate.coreDataStack)
-/*
-            let emptyRecipes = Recipes(from: 0, to: 0, count: 0, _links: Recipes._links.init(next: Recipes._links.next.init(href: "")), hits: [])
-            self.recipes = AppDelegate.coredataRecipe?.getRecipesStored() ?? emptyRecipes
-  */          //self.recipes = coredataRecipe.getRecipesStored()!
         }
         self.tableView.reloadData()
         setlabelNoRecipe()

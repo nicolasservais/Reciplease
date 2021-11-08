@@ -20,7 +20,6 @@ final class SearchViewController: UIViewController, UITableViewDelegate {
         self.title = "Reciplease"
     }
     required init?(coder: NSCoder) {
-        //fatalError("init(coder:) has not been implemented")
         return nil
     }
     override func viewDidLoad() {

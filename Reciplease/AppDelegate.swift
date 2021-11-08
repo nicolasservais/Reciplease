@@ -19,14 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     override init() {
         tabView = TabViewController()
         super.init()
-        //coredataRecipe = CoredataRecipe(coreDataStack: coreDataStack)
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow()
         window!.rootViewController = tabView
         window!.makeKeyAndVisible()
-        print("frame: \(tabView.view.frame)")
         return true
     }
 
@@ -38,6 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         AppDelegate.coreDataStack.saveContext()
     }
-*/
+     */
 }
 

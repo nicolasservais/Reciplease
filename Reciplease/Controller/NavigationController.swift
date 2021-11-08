@@ -22,7 +22,6 @@ final class NavigationController: UINavigationController {
     }
     required init?(coder: NSCoder) {
         return nil
-        //fatalError("init(coder:) has not been implemented")
     }
     override func viewDidLoad() {
             let icon = UITabBarItem(tabBarSystemItem: .search, tag: 0)
@@ -33,6 +32,5 @@ final class NavigationController: UINavigationController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.view.constraintToSafeArea()
-        
     }
 }

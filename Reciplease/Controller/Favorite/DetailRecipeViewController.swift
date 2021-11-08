@@ -49,7 +49,6 @@ final class DetailRecipeViewController: UIViewController, UIScrollViewDelegate {
     }
     required init?(coder: NSCoder) {
         return nil
-        //fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -138,6 +137,10 @@ final class DetailRecipeViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         startMoveInView()
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        self.dismiss(animated: false)
+    }
+
 // MARK: Notification
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -172,10 +175,25 @@ final class DetailRecipeViewController: UIViewController, UIScrollViewDelegate {
     @objc private func validateDeleteRecipe(notification: Notification) {
         starButton.fillColor = .white
     }
+// MARK: Action
+    @objc func closeView(_ sender:UITapGestureRecognizer) {
+        if scrollView.contentOffset.y > 0 {
+            scrollStart = true
+            scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        } else {
+            stopMoveInView()
+        }
+    }
+// MARK: Scroll
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if scrollStart {
+            scrollStart = false
+            stopMoveInView()
+        }
+    }
 // MARK: Method
     func initialDraw() {
         scrollView.constraintToSafeArea()
-        //scrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         imageRecipeView.frame = CGRect(x: 0, y: offsetImage, width: self.positionContainer.width, height: self.positionContainer.width)
         containerImageView.frame = positionContainer
         labelRecipe.frame = CGRect(x: 5, y: self.positionContainer.origin.y+self.positionContainer.height-46, width: self.positionContainer.width-10, height: 44)
@@ -191,6 +209,9 @@ final class DetailRecipeViewController: UIViewController, UIScrollViewDelegate {
         starButton.frame = CGRect(x: -50, y: 10, width: 40, height: 40)
         directionButton.frame = CGRect(x: 4, y: self.positionContainer.origin.y+self.positionContainer.height-heightDirectionButton, width: self.positionContainer.width-8, height: heightDirectionButton)
     }
+    private func getimage() {
+        imageRecipeView.downloaded(from: recipe.image, contentMode: .scaleAspectFill)
+    }
     private func addIngredients() {
         cellulesIngredient.removeAll()
         let title:UILabel = UILabel(frame: CGRect(x: 4, y: 0, width: self.view.frame.width-8, height: heightCellLabel))
@@ -205,7 +226,6 @@ final class DetailRecipeViewController: UIViewController, UIScrollViewDelegate {
         title.text = "Ingredients"
         cellulesIngredient.append(title)
         for ingredient in recipe.ingredientLines {
-            // print("ingredient : \(ingredient)")
             let label:UILabel = UILabel(frame: CGRect(x: 10, y: 0, width: self.view.frame.width-20, height: heightCellLabel))
             label.textAlignment = .center
             label.lineBreakMode = .byWordWrapping
@@ -217,6 +237,7 @@ final class DetailRecipeViewController: UIViewController, UIScrollViewDelegate {
             cellulesIngredient.append(label)
         }
     }
+// MARK: Graphic
     private func addLineBottomCenter(widthPage: CGFloat, width: CGFloat) -> CAShapeLayer{
         let bezier: UIBezierPath = UIBezierPath()
         bezier.move(to: CGPoint(x: (widthPage/2)-(width/2), y: heightCellLabel+2))
@@ -228,6 +249,7 @@ final class DetailRecipeViewController: UIViewController, UIScrollViewDelegate {
         shape.strokeColor = UIColor.gray.cgColor
         return shape
     }
+// MARK: Animation
     private func startMoveInView() {
         gradientTransformRatio = positionContainer.width/CellRecipe.heightRowRecipe/4*7
         moveGradient(duration: animationDuration, transformFrom: 1, transformTo: gradientTransformRatio, locationFrom: [0.5, 1.0], locationTo: [0.3, 1.0])
@@ -259,7 +281,6 @@ final class DetailRecipeViewController: UIViewController, UIScrollViewDelegate {
             self.containerInformationView.frame.origin.x = self.positionContainer.width-90
             self.starButton.frame.origin.x = 10
         }, completion: nil)
-
     }
     private func stopMoveInView() {
         moveGradient(duration: animationDuration, transformFrom: gradientTransformRatio, transformTo: 1, locationFrom: [0.3, 1.0], locationTo: [0.5, 1.0])
@@ -304,9 +325,6 @@ final class DetailRecipeViewController: UIViewController, UIScrollViewDelegate {
             }
         }
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        self.dismiss(animated: false)
-    }
     private func moveGradient(duration: CGFloat, transformFrom: CGFloat, transformTo: CGFloat, locationFrom: [CGFloat], locationTo: [CGFloat]) {
         let gradientAnimation = CABasicAnimation(keyPath: "transform.scale.y")
         gradientAnimation.fromValue = transformFrom
@@ -327,23 +345,6 @@ final class DetailRecipeViewController: UIViewController, UIScrollViewDelegate {
         gradientAnimation2.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         gradientLayer.add(gradientAnimation2, forKey: "anim2")
     }
-    private func getimage() {
-        imageRecipeView.downloaded(from: recipe.image, contentMode: .scaleAspectFill)
-    }
-    @objc func closeView(_ sender:UITapGestureRecognizer) {
-        if scrollView.contentOffset.y > 0 {
-            scrollStart = true
-            scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-        } else {
-            stopMoveInView()
-        }
-    }
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if scrollStart {
-            scrollStart = false
-            stopMoveInView()
-        }
-    }
 // MARK: Action
     private func clicStarButton() {
         if starButton.fillColor == .white {
@@ -353,25 +354,8 @@ final class DetailRecipeViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     private func clicDirectionButton() {
-        
         if let url = URL(string: recipe.url) {
             UIApplication.shared.open(url)
         }
     }
-    /*
-    func getBezierStart(rect: CGRect, radius: CGFloat) -> UIBezierPath {
-        let bezier: UIBezierPath = UIBezierPath()
-        bezier.move(to: CGPoint(x: rect.origin.x+rect.width/2, y: 0))
-        bezier.addLine(to: CGPoint(x: rect.origin.x+rect.width-radius, y: rect.origin.y))
-        bezier.addArc(withCenter: CGPoint(x: rect.origin.x+rect.width-radius, y: rect.origin.y+radius), radius: radius, startAngle: -(CGFloat.pi/2), endAngle: 0, clockwise: true)
-        bezier.addLine(to: CGPoint(x: rect.origin.x+rect.width, y: rect.origin.y+rect.height-radius))
-        bezier.addArc(withCenter: CGPoint(x: rect.origin.x+rect.width-radius, y: rect.origin.y+rect.height-radius), radius: radius, startAngle: 0, endAngle: CGFloat.pi/2, clockwise: true)
-        bezier.addLine(to: CGPoint(x: rect.origin.x+radius, y: rect.origin.y+rect.height))
-        bezier.addArc(withCenter: CGPoint(x: rect.origin.x+radius, y: rect.origin.y+rect.height-radius), radius: radius, startAngle: CGFloat.pi/2, endAngle: CGFloat.pi, clockwise: true)
-        bezier.addLine(to: CGPoint(x: rect.origin.x, y: rect.origin.y+radius))
-        bezier.addArc(withCenter: CGPoint(x: rect.origin.x+radius, y: rect.origin.y+radius), radius: radius, startAngle: CGFloat.pi, endAngle: CGFloat.pi/2*3, clockwise: true)
-        bezier.addLine(to: CGPoint(x: rect.origin.x+rect.width/2, y: 0))
-
-        return bezier
-    }*/
 }

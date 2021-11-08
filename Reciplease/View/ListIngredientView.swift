@@ -48,7 +48,6 @@ class ListIngredientView: UIView {
     }
     required init?(coder: NSCoder) {
         return nil
-        //fatalError("init(coder:) has not been implemented")
     }
 // MARK: Notification
     deinit {

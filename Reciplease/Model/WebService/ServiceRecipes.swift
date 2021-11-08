@@ -28,7 +28,6 @@ class ServiceRecipe: NetworkRequest {
 
     func getRecipes(ingredients: String, completion: @escaping (Result<Recipes, Error>) -> Void) {
         guard let queryUrl = self.getRecipeURL(query: ingredients) else { return }
-        //print(queryUrl)
         sessionAF.request(with: queryUrl) { responses  in
             DispatchQueue.main.async {
                 guard let data = responses.data, responses.error == nil else {
@@ -68,10 +67,6 @@ class ServiceRecipe: NetworkRequest {
                 URLQueryItem(name: "q", value: query)
             ]
             }
-        //guard let url = urlComponents.url else {
-        //    return nil
-            //fatalError("Could not create URL from components")
-        //}
         return urlComponents.url
     }
 }

@@ -19,18 +19,6 @@ open class CoreDataStack {
         container.loadPersistentStores(completionHandler: { (_,_) in})
         return container
     }()
-/*    public lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: modelName)
-        container.loadPersistentStores(completionHandler: { (_, error) in
-            if let error = error as NSError? {
-                //fatalError("error \(error), \(error.userInfo)")
-                print("error \(error), \(error.userInfo)")
-            
-            }
-        })
-        return container
-    }()
-*/
     public lazy var viewContext: NSManagedObjectContext = {
         return persistentContainer.viewContext
     }()
@@ -38,12 +26,4 @@ open class CoreDataStack {
         guard viewContext.hasChanges else { return }
         try? viewContext.save()
     }
-    /*public func saveContext() {
-        guard viewContext.hasChanges else { return }
-        do {
-            try viewContext.save()
-        } catch let error as NSError {
-            print("error \(error), \(error.userInfo)")
-        }
-    }*/
 }

@@ -23,7 +23,6 @@ final class CellRecipe: UITableViewCell {
 
     
     init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, hit: Recipes.hits) {
-        //self.recipe = hit.recipe
         self.recipe = hit.recipe //Recipes.hits.recipe(label: "", image: "", totalTime: 0, yield: 0)
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         loadView()
@@ -31,16 +30,10 @@ final class CellRecipe: UITableViewCell {
     
     required init?(coder: NSCoder) {
         return nil
-        //fatalError("init(coder:) has not been implemented")
     }
     override func layoutSubviews() {
         redraw()
     }
-    /*
-    func getImage() -> UIImage {
-        return imageRecipeView.image ?? UIImage()
-    }
-     */
     private func loadView() {
         self.backgroundColor = .white
         imageRecipeView.image = UIImage(named: "NoImage")

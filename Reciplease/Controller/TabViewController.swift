@@ -17,7 +17,6 @@ final class TabViewController: UITabBarController {
         self.setViewControllers([navigationSearchController,listRecipeController], animated: false)
     }
     required init?(coder: NSCoder) {
-        //fatalError("init(coder:) has not been implemented")
         return nil
     }
 }
