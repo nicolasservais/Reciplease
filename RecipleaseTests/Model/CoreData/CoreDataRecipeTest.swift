@@ -62,27 +62,4 @@ class CoreDataRecipeTest: XCTestCase {
             XCTFail("Test getRecipe in CoreDataRecipeTest method with correct Data failed.")
         }
     }
-    
-    /*func testInitialisationErrorInPersistentContainerInCoreDataStack() {
-        
-        let coreData = CoreDataStack(modelName: "RecipleaseError")
-        let persistence
-        coreDataRecipe = CoredataRecipe(coreDataStack: coreData)
-        //coreData.saveContext()
-        //coreData.saveContext()
-        XCTAssertNotNil(coreDataRecipe)
-        
-    }*/
-    /*func testInitialisationErrorInViewContexInCoreDataStack() {
-        
-        
-        let coreData = CoreDataStack(modelName: "Reciplease")
-        //coreDataRecipe = CoredataRecipe(coreDataStack: coreData)
-        coreData.persistentContainer.loadPersistentStores { description, error in
-            XCTAssertNotNil(error)
-        }
-        XCTAssertNotNil(coreDataRecipe)
-        
-    }
-     */
 }

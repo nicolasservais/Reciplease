@@ -57,7 +57,6 @@ final class ListRecipesTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if !AppDelegate.coreDataRecipeActivate{
-            //isCoredataRecipeActivate = true
             AppDelegate.coreDataRecipeActivate = true
             AppDelegate.coredataRecipe = CoredataRecipe(coreDataStack: AppDelegate.coreDataStack)
         }

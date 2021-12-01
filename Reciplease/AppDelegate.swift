@@ -27,15 +27,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.makeKeyAndVisible()
         return true
     }
-
-// MARK: CoreData Saving
-    /*
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        AppDelegate.coreDataStack.saveContext()
-    }
-    func applicationWillTerminate(_ application: UIApplication) {
-        AppDelegate.coreDataStack.saveContext()
-    }
-     */
 }
 
